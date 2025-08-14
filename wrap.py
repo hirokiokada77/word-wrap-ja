@@ -9,39 +9,35 @@ PROHIBIT_LINE_START_CHARS = set("、。，．」』）】〉》’”")
 
 def wrap_text(text: str, max_width: int) -> str:
     tokenizer = Tokenizer()
-    tokens = tokenizer.tokenize(text)
-
     lines = []
-    current_line = []
-    current_width = 0
 
-    for token in tokens:
-        word = token.surface
-        word_width = wcswidth(word)
-        if word_width < 0:
-            word_width = len(word)
+    for line in text.splitlines():
+        tokens = tokenizer.tokenize(line)
+        current_line = []
+        current_width = 0
 
-        if (
-            current_width + word_width > max_width
-            and current_line
-            and word in PROHIBIT_LINE_START_CHARS
-        ):
-            current_line.append(word)
+        for token in tokens:
+            word = token.surface
+            word_width = wcswidth(word)
+            if word_width < 0:
+                word_width = len(word)
+
+            if current_width > 0 and current_width + word_width > max_width:
+                if current_line and word in PROHIBIT_LINE_START_CHARS:
+                    current_line.append(word)
+                    lines.append("".join(current_line))
+                    current_line = []
+                    current_width = 0
+                else:
+                    lines.append("".join(current_line))
+                    current_line = [word]
+                    current_width = word_width
+            else:
+                current_line.append(word)
+                current_width += word_width
+
+        if current_line:
             lines.append("".join(current_line))
-            current_line = []
-            current_width = 0
-            continue
-
-        if current_width + word_width > max_width:
-            lines.append("".join(current_line))
-            current_line = [word]
-            current_width = word_width
-        else:
-            current_line.append(word)
-            current_width += word_width
-
-    if current_line:
-        lines.append("".join(current_line))
 
     return "\n".join(lines)
 
