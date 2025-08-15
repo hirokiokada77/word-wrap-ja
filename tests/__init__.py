@@ -1,5 +1,5 @@
 import unittest
-from wrap import wrap_text
+from word_wrap_ja import wrap_text
 
 
 class TestWrapText(unittest.TestCase):

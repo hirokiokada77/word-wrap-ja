@@ -1,5 +1,5 @@
 [project]
-name = "word-wrap-ja"
+name = "word_wrap_ja"
 version = "0.1.0"
 description = "A tool for wrapping Japanese text based on visual width"
 authors = [
@@ -14,12 +14,13 @@ dependencies = [
 ]
 
 [project.scripts]
-word-wrap-ja = "wrap:main"
+word-wrap-ja = "word_wrap_ja:main"
+
+[build-system]
+requires = ["uv_build>=0.8.10,<0.9.0"]
+build-backend = "uv_build"
 
 [dependency-groups]
 dev = [
-    "ruff>=0.12.8",
+    "ruff>=0.12.9",
 ]
-
-[tool.uv]
-package = true
