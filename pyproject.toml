@@ -2,6 +2,7 @@
 name = "word_wrap_ja"
 version = "0.1.0"
 description = "A tool for wrapping Japanese text based on visual width"
+readme = "README.md"
 authors = [
     { name = "Hiroki Okada", email = "hirokiokada77@gmail.com" }
 ]
